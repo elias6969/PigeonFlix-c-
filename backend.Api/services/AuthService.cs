@@ -35,11 +35,15 @@ namespace backend.Api.services
                 return null;
 
             // Claims
+
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email ?? string.Empty),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+              new Claim(ClaimTypes.NameIdentifier, user.Id),
+              new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
+              new Claim(JwtRegisteredClaimNames.Sub, user.Email ?? string.Empty),
+              new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
+
 
             // JWT signing
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
